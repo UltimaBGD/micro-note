@@ -7,5 +7,25 @@
 
     <body>
         <h1>Test!~</h1>
+        <div id="note" contenteditable></div>
+        <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
+        <script>
+        const fs = new Filer.FileSystem(); 
+        window.addEventListener('DOMContentLoaded', (event) => {
+            fs.readFile('/note', 'utf8', function(err, data) {
+                if (err || !data){
+                    data = "Welcome to my Notepad!"
+                }
+                var text = document.createTextNode(data);
+                document.querySelector('#note').appendChild(text);
+            });
+        });
+        var myCallback = function(){
+            fs.writeFile('/note', document.querySelector('#note').innerHTML, function (err) {
+            if (err) throw err;
+        });
+        }
+        var intervalID = window.setInterval(myCallback, 300);
+        </script>
     </body>
 </html>
