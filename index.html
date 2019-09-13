@@ -1,13 +1,21 @@
 <!doctype html>
 <html>
     <head>
-        <meta charset="utf-8">
-        <title>Test Web Page</title>
-    </head>
-
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
+        <title>Note-Saver</title>
+      </head>
     <body>
-        <h1>Test!~</h1>
-        <div id="note" contenteditable></div>
+        <div class = "paper container" style="text-align: center">
+        <h1>Note Editor!</h1>
+        <textarea id="note" contenteditable oninput = "saving()" style = "display: block; margin-left: auto;
+        margin-right: auto;"></textarea>
+        <div style = "text-align: right">
+        <button id = "button">Saved!</button>
+    </div>
+        </div>
         <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
         <script>
         const fs = new Filer.FileSystem(); 
@@ -17,15 +25,20 @@
                     data = "Welcome to my Notepad!"
                 }
                 var text = document.createTextNode(data);
-                document.querySelector('#note').appendChild(text);
+                document.querySelector('#note').value = data;
             });
         });
         var myCallback = function(){
-            fs.writeFile('/note', document.querySelector('#note').innerHTML, function (err) {
+            fs.writeFile('/note', document.querySelector('#note').value, function (err) {
             if (err) throw err;
         });
+        document.getElementById("button").innerHTML = "Saved!"
         }
         var intervalID = window.setInterval(myCallback, 300);
+        var saving = function(){
+           var button =  document.getElementById("button")
+           button.innerHTML="Saving...";
+        }
         </script>
     </body>
 </html>
