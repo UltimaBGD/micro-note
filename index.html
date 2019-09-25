@@ -22,17 +22,20 @@
         const fs = new Filer.FileSystem(); 
         window.addEventListener('DOMContentLoaded', (event) => {
             fs.readFile('/note', 'utf8', function(err, data) {
-                const elem = document.querySelector('#note');
-                if (err || !data) {
-                    elem.innerHTML = "Welcome to my Notepad!"
-                }
-                else {
-                    if (data) {
-                        elem.innerHTML = data;
-                    }
-                }
-                // Set focus to the editor
-                elem.focus();
+                const elem = document.querySelector('#note');
+                if (err || !data) {
+                    elem.innerHTML = "Welcome to my Notepad!"
+                }
+                else {
+                    if (data) {
+                        elem.innerHTML = data;
+                    }
+                }
+                // Set focus to the editor
+                elem.focus();
+                var val = elem.value; //store the value of the element
+                elem.value = ''; //clear the value of the element
+                elem.value = val; //set that value back. 
             });
         });
         var myCallback = function(){
